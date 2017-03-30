@@ -1,8 +1,5 @@
-## We're using the each() method to iterate
-## over an array of students. How can you modify
-## the program to print a number before the name of
-## each student, e.g. "1. Dr. Hannibal Lecter"?
-## Hint: look into each_with_index()
+## Modify your program to only print
+## the students whose name is shorter than 12 characters
 
 # asking for input
 def input_students
@@ -29,9 +26,12 @@ def print_header
   puts "------------"
 end
 
+## Print only the names which are shorter than 12 characters
 def print(students)
-  students.each.with_index(1) do |student, index|
-    puts index.to_s + " #{student[:name]} (#{student[:cohort]} cohort)"
+  students.each do |student|
+      if letter == student[:name][0].to_s.downcase
+      puts "#{student[:name]} (#{student[:cohort]} cohort)"
+    end
   end
 end
 
@@ -41,6 +41,4 @@ end
 
 students = input_students
 # nothing will happen until we call the methods
-print_header
 print(students)
-print_footer(students)
