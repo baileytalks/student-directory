@@ -24,25 +24,36 @@ def input_students
 
   puts "What is their hobby?"
   hobby = gets.chomp
-  if hobby == "done"
+  if hobby == ""
+    hobby = "nothing :("
+  elsif hobby == "done"
     break
   end
 
   puts "What's their country of birth?"
   country_of_birth = gets.chomp
-  if country_of_birth == "done"
+  if country_of_birth == ""
+    country_of_birth = "unknown :("
+  elsif
+    country_of_birth == "done"
     break
   end
 
   puts "What's their height?"
   height = gets.chomp
-  if height == "done"
+  if height == ""
+    height = "unknown :("
+  elsif
+    height == "done"
     break
   end
 
   puts "What's their favourite biscuit?"
   biscuit = gets.chomp
-  if biscuit == "done"
+  if biscuit == ""
+    biscuit = "unknown, but probably custard creams"
+  elsif
+    biscuit == "done"
     break
   end
 
@@ -110,7 +121,7 @@ end
 
 def print_footer(students)
   puts "------------".center(50, '--')
-  puts "Overall, we have #{students.count} great students"
+  puts "Overall, we have #{students.count} great students!"
   puts
 end
 
@@ -120,11 +131,12 @@ print_header
 print(students)
 print_footer(students)
 
-
+## Grouping the cohorts
 students.group_by { |hash| hash[:cohort] }.each { |key, value|
   puts "#{key.capitalize}"
-  puts "---------------"
+  puts "------------".center(20, '--')
   value.each {|v|
     puts v[:name]
     }
+  puts
   }
