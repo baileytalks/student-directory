@@ -1,3 +1,9 @@
+## In the input_students method the cohort value
+## is hard-coded. How can you ask for both the name
+## and the cohort? What if one of the values is empty?
+## Can you supply a default value? The input will be
+## given to you as a string? How will you convert it
+## to a symbol? What if the user makes a typo?
 
 # asking for input
 
@@ -119,12 +125,3 @@ students = input_students
 print_header
 print(students)
 print_footer(students)
-
-
-students.group_by { |hash| hash[:cohort] }.each { |key, value|
-  puts "#{key.capitalize}"
-  puts "---------------"
-  value.each {|v|
-    puts v[:name]
-    }
-  }
