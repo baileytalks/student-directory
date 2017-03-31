@@ -1,9 +1,8 @@
-## Once you have completed the "Asking for user input"
-## section, open this file. It's Ruby code but it has
-## some typos. Copy it to a local file and open it in
-## Atom without syntax highlighting. To do this, select
-## "Plain Text" in the lower right corner of the window.
-## It should look similar to this:
+## What happens if the user doesn't enter any
+## students? It will try to print an empty list.
+## How can you use an if statement (Control Flow)
+## to only print the list if there is at least one
+## student in there?
 
 def input_students
   puts "Please enter the names of the students"
@@ -40,6 +39,11 @@ def print_footer(students)
 end
 
 students = input_students
-print_header
-print(students)
-print_footer(students)
+if
+  students.empty? != true
+  print_header
+  print(students)
+  print_footer(students)
+else
+  puts "No students today? Too bad"
+end
