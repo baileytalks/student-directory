@@ -19,14 +19,13 @@ def input_students
   students = []
 
   loop do
+    begin
     puts "To start, type in their name"
       name = gets.chomp
+    end until name != ""
       if name == "done"
         break
       end
-      while name == "" do
-        puts "You need to put a name in"
-  end
 
   puts "What is their hobby?"
   hobby = gets.chomp

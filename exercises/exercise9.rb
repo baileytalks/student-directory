@@ -1,3 +1,8 @@
+## Right now if we have only one student, the user
+## will see a message "Now we have 1 students", whereas
+## it should be "Now we have 1 student". How can you fix it
+## so that it used singular form when appropriate and plural
+## form otherwise?
 
 # asking for input
 
@@ -13,14 +18,13 @@ def input_students
   students = []
 
   loop do
+    begin
     puts "To start, type in their name"
       name = gets.chomp
+    end until name != ""
       if name == "done"
         break
       end
-      while name == "" do
-        puts "You need to put a name in"
-  end
 
   puts "What is their hobby?"
   hobby = gets.chomp
@@ -94,7 +98,11 @@ def input_students
                 height: height,
                 biscuit: biscuit,
                 cohort: cohort}
-    puts "Now we have #{students.count} students"
+    if students.count == 1
+      puts "Now we have 1 student"
+    else
+      puts "Now we have #{students.count} students"
+    end
   # return the array of students
 end
   students
