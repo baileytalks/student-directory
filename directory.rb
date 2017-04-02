@@ -35,6 +35,7 @@ def print_footer(students)
 end
 
 students = input_students
+# nothing will happen until we call the methods
 print_header
 print(students)
 print_footer(students)
