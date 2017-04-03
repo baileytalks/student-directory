@@ -54,14 +54,17 @@ def load_students(filename = "students.csv")
     push_to_array(name)
   end
   file.close
+  puts "Students successfully loaded from '#{filename}'"
 end
 
 def show_students
+  puts "Showing students now..."
   print_header
   print_students_list
   print_footer
 end
 
+## Printing the list of students:
 def print_header
   puts
   puts "The students of Villains Academy"
@@ -75,9 +78,12 @@ def print_students_list
 end
 
 def print_footer
+  puts "-------------"
   puts "Overall, we have #{@students.count} great students"
   puts
 end
+## ---------------------------
+
 
 def save_students
   # open file for writing
@@ -88,6 +94,7 @@ def save_students
     file.puts csv_line
   end
   file.close
+  puts "Students successfully saved to 'students.csv'"
 end
 
 def try_load_students
