@@ -1,5 +1,6 @@
 
 @students = [] # an empty array accessible to all methods
+require 'csv'  # use the CSV library
 
 def print_menu
   puts "1. Input the students"
@@ -55,11 +56,8 @@ def load_students
    elsif not File.exist?(load_file) # if it exists
      puts "No such file – #{load_file} doesn't exist"
    else
-     File.open(load_file, "r") do |file|
-      file.readlines.each do |line|
-        name, cohort = line.chomp.split(',')
-        push_to_array(name)
-        end
+     CSV.foreach(load_file) do |row|
+       push_to_array(row[0])
       end
       puts "Students successfully loaded from '#{load_file}'"
     end
@@ -97,11 +95,19 @@ def save_students
   new_file = STDIN.gets.chomp
   return if new_file.nil?
   # open file for writing
-  File.open(new_file, "w") do |file|
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  if File.exist?(new_file) # if it exists
+    CSV.open(new_file, "a+") do |file|
+      student_data = [student[:name], student[:cohort]]
+      csv_line = student_data.join(",")
+      file << csv_line
+    end
+  else
+    CSV.open(new_file, "wb") do |file|
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort]]
+      csv_line = student_data.join(",")
+      file << csv_line
+      end
     end
   end
   puts "Students successfully saved to '#{new_file}'"
