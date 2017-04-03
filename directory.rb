@@ -4,8 +4,8 @@
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "3. Save the list to a file"
+  puts "4. Load the list from a file"
   puts "9. Exit"
 end
 
@@ -47,14 +47,22 @@ def input_students
   @students
 end
 
-def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
-    push_to_array(name)
-  end
-  file.close
-  puts "Students successfully loaded from '#{filename}'"
+def load_students
+  puts "Which file do you want to load?"
+  load_file = STDIN.gets.chomp
+   if load_file.nil?
+     puts "You didn't put anything in"
+   elsif not File.exist?(load_file) # if it exists
+     puts "No such file – #{load_file} doesn't exist"
+   else
+     File.open(load_file, "r") do |file|
+      file.readlines.each do |line|
+        name, cohort = line.chomp.split(',')
+        push_to_array(name)
+        end
+      end
+      puts "Students successfully loaded from '#{load_file}'"
+    end
 end
 
 def show_students
@@ -84,33 +92,20 @@ def print_footer
 end
 ## ---------------------------
 
-
 def save_students
+  puts "Name your new file"
+  new_file = STDIN.gets.chomp
+  return if new_file.nil?
   # open file for writing
-  file = File.open("students.csv","w")
+  File.open(new_file, "w") do |file|
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
     file.puts csv_line
+    end
   end
-  file.close
-  puts "Students successfully saved to 'students.csv'"
+  puts "Students successfully saved to '#{new_file}'"
 end
 
-def try_load_students
-  filename = ARGV.first # first argument from the command line
-  if filename.nil?
-    load_students('students.csv')
-    puts "Loaded #{@students.count} from 'students.csv'"
-  elsif File.exists?(filename) # if it exists
-    load_students(filename)
-    puts "Loaded #{@students.count} from #{filename}"
-  else not File.exist?(filename)
-    puts "Sorry, #{filename} does not exist"
-    load_students('students.csv')
-    puts "Loaded #{@students.count} from 'students.csv'"
-  end
-end
-
-try_load_students
+load_students
 interactive_menu
