@@ -10,6 +10,7 @@ def print_menu
 end
 
 def interactive_menu
+  @students = []
   loop do
     print_menu
     process(STDIN.gets.chomp)
@@ -32,10 +33,6 @@ def process(selection)
   end
 end
 
-def push_to_array(name)
-  @students << {:name => name, :cohort => :november}
-end
-
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
@@ -45,22 +42,13 @@ def input_students
   # while the name is not empty, repeat this code
       while !name.empty? do
   # add the student hash to the array
-      push_to_array(name)
+      @students << {:name => name, :cohort => :november}
       puts "Now we have #{@students.count} students"
   # get another name from the user
       name = STDIN.gets.chomp
     end
   # return the array of students
   @students
-end
-
-def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
-    push_to_array(name)
-  end
-  file.close
 end
 
 def show_students
@@ -95,18 +83,24 @@ def save_students
   file.close
 end
 
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
+  file.readlines.each do |line|
+    name, cohort = line.chomp.split(',')
+    @students << {name: name, cohort: cohort.to_sym}
+  end
+  file.close
+end
+
 def try_load_students
   filename = ARGV.first # first argument from the command line
-  if filename.nil?
-    load_students('students.csv')
-    puts "Loaded #{@students.count} from 'students.csv'"
-  elsif File.exists?(filename) # if it exists
+  return if filename.nil? # get out of method if it isn't given
+  if File.exists?(filename) # if it exists
     load_students(filename)
     puts "Loaded #{@students.count} from #{filename}"
-  else not File.exist?(filename)
-    puts "Sorry, #{filename} does not exist"
-    load_students('students.csv')
-    puts "Loaded #{@students.count} from 'students.csv'"
+  else
+    puts "Sorry, #{filename} doesn't exist"
+    exit
   end
 end
 
