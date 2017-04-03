@@ -12,24 +12,17 @@ end
 def interactive_menu
   loop do
     print_menu
-    process(STDIN.gets.chomp)
+    load_selection(STDIN.gets.chomp)
   end
 end
 
-def process(selection)
-  case selection
-    when "1"
-      input_students
-    when "2"
-      show_students
-    when "3"
-      save_students
-    when "4"
-      load_students
-    when "9"
-      exit # this will terminate the program
-    else "I don't know what you meant"
-  end
+def load_selection(selection)
+    numbers = {"1" => method(:input_students),
+               "2" => method(:show_students),
+               "3" => method(:save_students),
+               "4" => method(:load_students),
+               "9" => method(:exit)}
+    numbers[selection].()
 end
 
 def push_to_array(name)
@@ -70,6 +63,7 @@ def show_students
 end
 
 def print_header
+  puts
   puts "The students of Villains Academy"
   puts "-------------"
 end
@@ -82,6 +76,7 @@ end
 
 def print_footer
   puts "Overall, we have #{@students.count} great students"
+  puts
 end
 
 def save_students
